@@ -15,7 +15,7 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [x] Step 10: Achievements/badge system
 - [x] Step 11: Leaderboard + friends
 - [x] Step 12: Notifications (email + scheduled jobs)
-- [ ] Step 13: Admin panel APIs
+- [x] Step 13: Admin panel APIs
 
 ## Frontend (React + Vite)
 - [ ] Step 14: Vite + Tailwind setup, routing, auth pages
@@ -33,4 +33,4 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [ ] Step 24: MongoDB Atlas production setup
 
 ---
-Current status: **Step 12 complete.** See backend/ folder. Email sending is optional — set EMAIL_USER/EMAIL_PASS (Gmail app password) in .env to enable it; otherwise the app just logs that it would have sent an email and keeps working.
+Current status: **Step 13 complete — entire backend is now built.** See backend/ folder. To reach the admin routes, manually set a user's `role` to `"admin"` in MongoDB Atlas (no signup flow creates admins, by design). Step 14 starts the frontend.

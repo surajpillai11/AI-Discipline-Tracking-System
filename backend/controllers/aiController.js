@@ -3,6 +3,7 @@ import { CATEGORIES } from "../models/Habit.js";
 import Habit from "../models/Habit.js";
 import { callGeminiCoach, callGeminiJSON } from "../services/geminiClient.js";
 import { buildCoachSystemInstruction } from "../services/aiCoachContext.js";
+import { logAIUsage } from "../services/aiUsageService.js";
 
 const MAX_HISTORY_TURNS_SENT = 10; // how many past messages we feed back to Gemini for context
 const MAX_MESSAGES_STORED = 200; // cap stored history per user so the doc doesn't grow forever
@@ -43,6 +44,7 @@ export const chatWithCoach = async (req, res, next) => {
     }
 
     await chat.save();
+    await logAIUsage(req.user._id, "coach_chat");
 
     res.json({
       success: true,
@@ -142,6 +144,8 @@ Respond ONLY with JSON matching exactly this shape, no other text:
       throw new Error("AI response was not in the expected format");
     }
 
+    await logAIUsage(req.user._id, "habit_suggestion");
+
     res.json({ success: true, data: result.suggestions });
   } catch (error) {
     next(error);
@@ -225,6 +229,8 @@ Respond ONLY with JSON matching exactly this shape, no other text:
       res.status(502);
       throw new Error("AI response was not in the expected format");
     }
+
+    await logAIUsage(req.user._id, "daily_planner");
 
     res.json({ success: true, data: result.schedule });
   } catch (error) {

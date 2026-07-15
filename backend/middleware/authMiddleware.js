@@ -16,7 +16,12 @@ export const protect = async (req, res, next) => {
 
       if (!req.user) {
         res.status(401);
-        throw new Error("User no longer exists");
+        return next(new Error("User no longer exists"));
+      }
+
+      if (req.user.isBanned) {
+        res.status(403);
+        return next(new Error("This account has been suspended"));
       }
 
       return next();

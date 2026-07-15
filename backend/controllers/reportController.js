@@ -2,6 +2,7 @@ import PDFDocument from "pdfkit";
 import Report from "../models/Report.js";
 import { gatherPeriodStats } from "../services/reportDataService.js";
 import { callGeminiJSON } from "../services/geminiClient.js";
+import { logAIUsage } from "../services/aiUsageService.js";
 
 /**
  * @route   POST /api/reports/weekly/generate
@@ -42,6 +43,8 @@ Per-habit breakdown: ${JSON.stringify(stats.habitBreakdown)}`;
       stats,
       content,
     });
+
+    await logAIUsage(req.user._id, "weekly_report");
 
     res.status(201).json({ success: true, data: report });
   } catch (error) {
@@ -87,6 +90,8 @@ Full per-habit breakdown: ${JSON.stringify(stats.habitBreakdown)}`;
       stats,
       content,
     });
+
+    await logAIUsage(req.user._id, "monthly_report");
 
     res.status(201).json({ success: true, data: report });
   } catch (error) {

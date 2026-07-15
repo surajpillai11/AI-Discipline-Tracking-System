@@ -4,17 +4,17 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 
 ## Backend (MVC)
 - [x] Step 1: Project setup — folder structure, security middleware, error handling, DB connection, server entry point
-- [x] Step 2: User model + Auth (signup/login/JWT/protected routes)
-- [x] Step 3: Habit model + CRUD APIs (incl. basic mark-complete/streak tracking)
-- [x] Step 4: Daily Log model + Streak calculation engine
-- [x] Step 5: Calendar heatmap data endpoint
-- [x] Step 6: Analytics endpoints (weekly/monthly aggregates for charts)
-- [x] Step 7: AI Discipline Coach (chat endpoint via Gemini API)
-- [x] Step 8: AI Habit Suggestions + Daily Planner
-- [x] Step 9: AI Weekly/Monthly Report generation (incl. PDF export)
-- [x] Step 10: Achievements/badge system
-- [x] Step 11: Leaderboard + friends
-- [x] Step 12: Notifications (email + scheduled jobs)
+- [ ] Step 2: User model + Auth (signup/login/JWT/protected routes)
+- [ ] Step 3: Habit model + CRUD APIs
+- [ ] Step 4: Daily Log model + Streak calculation engine
+- [ ] Step 5: Calendar heatmap data endpoint
+- [ ] Step 6: Analytics endpoints (weekly/monthly aggregates for charts)
+- [ ] Step 7: AI Discipline Coach (chat endpoint via Gemini API)
+- [ ] Step 8: AI Habit Suggestions + Daily Planner
+- [ ] Step 9: AI Weekly/Monthly Report generation
+- [ ] Step 10: Achievements/badge system
+- [ ] Step 11: Leaderboard + friends
+- [ ] Step 12: Notifications (email + scheduled jobs)
 - [ ] Step 13: Admin panel APIs
 
 ## Frontend (React + Vite)
@@ -33,4 +33,4 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [ ] Step 24: MongoDB Atlas production setup
 
 ---
-Current status: **Step 12 complete.** See backend/ folder. Email sending is optional — set EMAIL_USER/EMAIL_PASS (Gmail app password) in .env to enable it; otherwise the app just logs that it would have sent an email and keeps working.
+Current status: **Step 1 complete.** See backend/ folder.

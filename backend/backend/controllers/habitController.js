@@ -4,12 +4,7 @@ import {
   todayString,
   calculateCurrentStreak,
   calculateLongestStreak,
-  calculateMissedDays,
-  calculateWeeklyScore,
-  calculateMonthlyScore,
 } from "../utils/streakCalculator.js";
-import { syncDailyLogForToday } from "../services/dailyLogService.js";
-import { evaluateAndAwardAchievements } from "../services/achievementService.js";
 
 /**
  * Small helper: fetches a habit and confirms it belongs to req.user.
@@ -62,9 +57,7 @@ export const createHabit = async (req, res, next) => {
       reminderTime,
     });
 
-    const newAchievements = await evaluateAndAwardAchievements(req.user._id);
-
-    res.status(201).json({ success: true, data: habit, newAchievements });
+    res.status(201).json({ success: true, data: habit });
   } catch (error) {
     next(error);
   }
@@ -190,65 +183,15 @@ export const toggleCompleteToday = async (req, res, next) => {
     await habit.save();
 
     // Keep the user's aggregate stats roughly in sync.
-    // Step 6 (analytics) will replace this with a proper cross-habit recalculation job.
+    // Step 4 will replace this with a proper cross-habit recalculation job.
     await User.findByIdAndUpdate(req.user._id, {
       $inc: { "stats.totalHabitsCompleted": alreadyDone ? -1 : 1 },
     });
-
-    // Keep today's DailyLog (used for the calendar heatmap + analytics) in sync
-    await syncDailyLogForToday(req.user._id);
-
-    // Only newly completing (not un-completing) can unlock streak-based badges
-    const newAchievements = alreadyDone ? [] : await evaluateAndAwardAchievements(req.user._id);
 
     res.json({
       success: true,
       data: habit,
       completedToday: !alreadyDone,
-      newAchievements,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
- * @route   GET /api/habits/:id/stats
- * @access  Private
- *
- * Full streak engine output for a single habit: current/longest streak,
- * missed days since creation, 7-day and 30-day completion scores, and
- * overall completion percentage since the habit was created.
- */
-export const getHabitStats = async (req, res, next) => {
-  try {
-    const habit = await getOwnedHabit(req.params.id, req.user._id);
-
-    const missedDays = calculateMissedDays(habit.createdAt, habit.completedDates);
-    const weeklyScore = calculateWeeklyScore(habit.completedDates);
-    const monthlyScore = calculateMonthlyScore(habit.completedDates);
-
-    const daysSinceCreation = Math.max(
-      1,
-      Math.ceil((Date.now() - new Date(habit.createdAt)) / (1000 * 60 * 60 * 24))
-    );
-    const overallCompletionPercentage = Math.round(
-      (habit.totalCompletions / daysSinceCreation) * 100
-    );
-
-    res.json({
-      success: true,
-      data: {
-        habitId: habit._id,
-        name: habit.name,
-        currentStreak: habit.currentStreak,
-        longestStreak: habit.longestStreak,
-        totalCompletions: habit.totalCompletions,
-        missedDays,
-        weeklyScore, // % of last 7 days completed
-        monthlyScore, // % of last 30 days completed
-        overallCompletionPercentage, // % of all days since creation
-      },
     });
   } catch (error) {
     next(error);

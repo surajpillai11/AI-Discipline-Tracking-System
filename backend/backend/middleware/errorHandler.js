@@ -12,7 +12,7 @@ export const notFound = (req, res, next) => {
  * ends up here instead of crashing the server.
  */
 export const errorHandler = (err, req, res, next) => {
-  let statusCode = err.statusCode || (res.statusCode === 200 ? 500 : res.statusCode);
+  let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   let message = err.message;
 
   // Mongoose bad ObjectId

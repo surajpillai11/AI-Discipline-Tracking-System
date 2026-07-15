@@ -6,7 +6,6 @@ import {
   updateHabit,
   deleteHabit,
   toggleCompleteToday,
-  getHabitStats,
 } from "../controllers/habitController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -20,6 +19,5 @@ router.route("/").post(createHabit).get(getHabits);
 router.route("/:id").get(getHabitById).put(updateHabit).delete(deleteHabit);
 
 router.patch("/:id/complete", toggleCompleteToday);
-router.get("/:id/stats", getHabitStats);
 
 export default router;

@@ -18,13 +18,13 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [x] Step 13: Admin panel APIs
 
 ## Frontend (React + Vite)
-- [ ] Step 14: Vite + Tailwind setup, routing, auth pages
-- [ ] Step 15: Dashboard UI (glassmorphism, streaks, today's habits)
-- [ ] Step 16: Habit management UI
-- [ ] Step 17: Calendar heatmap component
-- [ ] Step 18: Analytics charts (Recharts)
-- [ ] Step 19: AI Coach chat UI
-- [ ] Step 20: Achievements, leaderboard, profile pages
+- [x] Step 14: Vite + Tailwind setup, routing, auth pages
+- [x] Step 15: Dashboard UI (glassmorphism, streaks, today's habits)
+- [x] Step 16: Habit management UI
+- [x] Step 17: Calendar heatmap component (full page)
+- [x] Step 18: Analytics charts (Recharts)
+- [x] Step 19: AI Coach chat UI
+- [x] Step 20: Achievements, leaderboard, profile pages
 - [ ] Step 21: Dark/light mode, PWA, polish
 
 ## Deployment
@@ -33,4 +33,4 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [ ] Step 24: MongoDB Atlas production setup
 
 ---
-Current status: **Step 13 complete — entire backend is now built.** See backend/ folder. To reach the admin routes, manually set a user's `role` to `"admin"` in MongoDB Atlas (no signup flow creates admins, by design). Step 14 starts the frontend.
+Current status: **Step 20 complete.** Achievements (trophy case with earned/locked states), Leaderboard (friend requests + rankings by score/weekly%/streak), and Profile (editable bio/goals/avatar + stats) pages added. Note: `totalStreakDays` in User.stats is defined in the backend schema but never actually incremented anywhere (only `totalHabitsCompleted` is) — the Profile page will always show 0 for it until that's wired up backend-side. Verified with `npm run build`.

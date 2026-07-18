@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Theme tokens as CSS custom properties. This is what makes Tailwind
+   classes like `text-ink`, `bg-surface-hover`, `border-border` actually
+   respond to the dark/light toggle - Tailwind compiles utility classes to
+   fixed values at build time, so without routing them through CSS vars,
+   any class using these tokens would be stuck on one theme's colors
+   regardless of the body.light toggle below. */
+:root {
+  --color-ink: #f5f7fa;
+  --color-ink-muted: #9ca3af;
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --color-surface-hover: rgba(255, 255, 255, 0.06);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.24);
+}
+
+body.light {
+  --color-ink: #0b0f1a;
+  --color-ink-muted: #5b6472;
+  --color-surface: rgba(11, 15, 26, 0.03);
+  --color-surface-hover: rgba(11, 15, 26, 0.06);
+  --color-border: rgba(11, 15, 26, 0.1);
+  --color-border-hover: rgba(11, 15, 26, 0.28);
+}
+
+body {
+  @apply font-body antialiased;
+  background-color: #0b0f1a;
+  color: var(--color-ink);
+}
+
+body.light {
+  background-color: #f5f7fa;
+}
+
+/* Reusable glass panel - used for auth cards, dashboard cards, etc. throughout the app */
+.glass-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Gradient border trick: padding-box + border-box background layering */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #10b981);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Visible keyboard focus - accessibility floor, not optional */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide scrollbars everywhere (body and any internal scroll container like
+   the chat window or heatmap) while keeping scroll behavior fully intact -
+   just a visual choice, not a functional one. */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, new Edge */
+}

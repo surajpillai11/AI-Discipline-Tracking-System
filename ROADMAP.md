@@ -25,7 +25,7 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [x] Step 18: Analytics charts (Recharts)
 - [x] Step 19: AI Coach chat UI
 - [x] Step 20: Achievements, leaderboard, profile pages
-- [ ] Step 21: Dark/light mode, PWA, polish
+- [x] Step 21: Dark/light mode, PWA, polish
 
 ## Deployment
 - [ ] Step 22: Deploy backend to Render
@@ -33,4 +33,6 @@ Tracking progress against the full spec. Each step is built, explained, and conf
 - [ ] Step 24: MongoDB Atlas production setup
 
 ---
-Current status: **Step 20 complete.** Achievements (trophy case with earned/locked states), Leaderboard (friend requests + rankings by score/weekly%/streak), and Profile (editable bio/goals/avatar + stats) pages added. Note: `totalStreakDays` in User.stats is defined in the backend schema but never actually incremented anywhere (only `totalHabitsCompleted` is) — the Profile page will always show 0 for it until that's wired up backend-side. Verified with `npm run build`.
+Current status: **Step 21 complete — frontend feature-complete.** Fixed a real dark/light-mode bug: Tailwind utility classes like `text-ink` and `bg-white/5` compiled to fixed hex values regardless of theme, so hovered nav links and several UI elements would have rendered near-invisible in light mode. Refactored the theme tokens (`ink`, `ink-muted`, `border`, `surface`, `surface-hover`, `border-hover`) to route through CSS custom properties in index.css instead, so they dynamically resolve per theme. Verified the fix landed in the actual production CSS output, not just the source. Also added: PWA support via vite-plugin-pwa (manifest, service worker, offline app-shell caching — API calls deliberately excluded from caching so the app never shows stale streak data offline), a real app icon (verified by rendering it to PNG and viewing it, not just trusting hand-written SVG path math), and vendor chunk splitting in vite.config.js which resolved the bundle-size warning that had been present since Step 15.
+
+Steps 22-24 (deployment to Render/Vercel/Atlas) require live accounts and credentials only you have, so those are manual steps I can walk you through when you're ready rather than something I can execute directly.

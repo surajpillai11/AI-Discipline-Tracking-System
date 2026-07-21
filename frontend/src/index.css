@@ -68,7 +68,15 @@ body.light {
   pointer-events: none;
 }
 
-/* Visible keyboard focus - accessibility floor, not optional */
+/* Native <select> dropdown popups are rendered by the browser/OS with a
+   forced white background that page CSS can't override - but our theme's
+   light text color WAS inheriting into the options, making them illegible
+   (near-white text on the browser's white popup). Force readable dark text
+   on options specifically so filters stay usable regardless of theme. */
+select option {
+  color: #111827;
+  background-color: #ffffff;
+}
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {

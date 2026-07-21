@@ -13,16 +13,16 @@ import {
 
 // Must match backend CATEGORIES in models/Habit.js exactly
 export const CATEGORIES = [
-  { value: "Fitness", icon: Dumbbell, color: "text-accent-emerald" },
-  { value: "Study", icon: BookOpen, color: "text-accent-blue" },
-  { value: "Reading", icon: Book, color: "text-accent-violet" },
-  { value: "Meditation", icon: Brain, color: "text-accent-violet" },
-  { value: "Coding", icon: Code2, color: "text-accent-blue" },
-  { value: "Diet", icon: Utensils, color: "text-accent-emerald" },
-  { value: "Water Intake", icon: Droplet, color: "text-accent-blue" },
-  { value: "Sleep", icon: Moon, color: "text-accent-violet" },
-  { value: "Finance", icon: Wallet, color: "text-accent-emerald" },
-  { value: "Custom", icon: Sparkles, color: "text-ink-muted" },
+  { value: "Fitness", icon: Dumbbell, color: "text-emerald-500" },
+  { value: "Study", icon: BookOpen, color: "text-blue-500" },
+  { value: "Reading", icon: Book, color: "text-violet-500" },
+  { value: "Meditation", icon: Brain, color: "text-violet-300" },
+  { value: "Coding", icon: Code2, color: "text-blue-700" },
+  { value: "Diet", icon: Utensils, color: "text-emerald-300" },
+  { value: "Water Intake", icon: Droplet, color: "text-sky-400" },
+  { value: "Sleep", icon: Moon, color: "text-violet-700" },
+  { value: "Finance", icon: Wallet, color: "text-emerald-700" },
+  { value: "Custom", icon: Sparkles, color: "text-slate-400" },
 ];
 
 // Must match backend enum in models/Habit.js exactly

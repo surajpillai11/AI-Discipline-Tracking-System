@@ -31,7 +31,7 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="glass-panel sticky top-4 z-20 mx-auto mb-6 flex max-w-5xl items-center justify-between rounded-xl px-4 py-2.5">
+    <header className="glass-panel sticky top-4 z-20 mx-auto mb-6 flex max-w-5xl items-center justify-between rounded-xl px-4 py-2.5 xl:max-w-6xl 2xl:max-w-7xl">
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <Flame className="text-accent-emerald" size={18} />

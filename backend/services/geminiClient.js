@@ -4,7 +4,7 @@
  * just deal with plain strings in and out.
  */
 
-const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
+const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
 /**
  * @param {string} systemInstruction

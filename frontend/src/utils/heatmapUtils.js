@@ -1,15 +1,15 @@
 export const LEVEL_COLORS = [
-  "rgba(255,255,255,0.06)", // level 0 - none
-  "#1e3a5f", // level 1
-  "#1d5f4a", // level 2
-  "#15803d", // level 3
-  "#10B981", // level 4 - full accent emerald
+  "var(--heatmap-0)", // No activity
+  "var(--heatmap-1)", // Low
+  "var(--heatmap-2)", // Medium
+  "var(--heatmap-3)", // High
+  "var(--heatmap-4)", // Perfect
 ];
 
 /**
  * Buckets a chronological, gap-free array of {date, level} entries into
  * week-columns (Sunday-start), padding the first/last week with nulls so
- * the grid aligns properly - same layout convention as GitHub's own graph.
+ * the grid aligns properly like GitHub's contribution graph.
  */
 export const buildWeeks = (days) => {
   if (!days || days.length === 0) return [];
@@ -18,18 +18,26 @@ export const buildWeeks = (days) => {
   let currentWeek = [];
 
   const firstDayOfWeek = new Date(days[0].date).getDay();
-  for (let i = 0; i < firstDayOfWeek; i++) currentWeek.push(null);
+
+  // Pad first week
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    currentWeek.push(null);
+  }
 
   days.forEach((day) => {
     currentWeek.push(day);
+
     if (currentWeek.length === 7) {
       weeks.push(currentWeek);
       currentWeek = [];
     }
   });
 
+  // Pad last week
   if (currentWeek.length > 0) {
-    while (currentWeek.length < 7) currentWeek.push(null);
+    while (currentWeek.length < 7) {
+      currentWeek.push(null);
+    }
     weeks.push(currentWeek);
   }
 
@@ -37,23 +45,28 @@ export const buildWeeks = (days) => {
 };
 
 /**
- * Returns [{ weekIndex, label }] marking the week-column where each new
- * month begins, for rendering month labels above a week-columns grid.
+ * Returns month labels positioned above the correct week column.
  */
 export const getMonthLabels = (weeks) => {
   const labels = [];
-  let lastMonth = null;
+  let lastMonth = -1;
 
   weeks.forEach((week, weekIndex) => {
     const firstRealDay = week.find((d) => d !== null);
+
     if (!firstRealDay) return;
 
-    const month = new Date(firstRealDay.date).getMonth();
+    const date = new Date(firstRealDay.date);
+    const month = date.getMonth();
+
     if (month !== lastMonth) {
       labels.push({
         weekIndex,
-        label: new Date(firstRealDay.date).toLocaleDateString("en-US", { month: "short" }),
+        label: date.toLocaleString("en-US", {
+          month: "short",
+        }),
       });
+
       lastMonth = month;
     }
   });

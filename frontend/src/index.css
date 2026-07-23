@@ -201,3 +201,19 @@ input:focus-visible {
 .contribution-calendar {
   display: none !important;
 }
+
+:root {
+  --heatmap-0: #1e293b;
+  --heatmap-1: #14532d;
+  --heatmap-2: #16a34a;
+  --heatmap-3: #22c55e;
+  --heatmap-4: #4ade80;
+}
+
+body.light {
+  --heatmap-0: #e2e8f0;
+  --heatmap-1: #bbf7d0;
+  --heatmap-2: #4ade80;
+  --heatmap-3: #22c55e;
+  --heatmap-4: #15803d;
+}

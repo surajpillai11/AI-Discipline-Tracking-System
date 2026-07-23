@@ -21,15 +21,45 @@ body,
   --color-surface-hover: rgba(255, 255, 255, 0.06);
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-hover: rgba(255, 255, 255, 0.24);
+
+  /* "Value" tokens: same hue family as the accent colors, but used
+     specifically for readable text/numbers rather than decoration. In dark
+     mode these equal the vivid accent colors (already legible on a dark
+     background). In light mode they're deepened - the vivid accent hexes
+     don't have enough contrast against a light background to read as text. */
+  --color-value-blue: #3b82f6;
+  --color-value-violet: #8b5cf6;
+  --color-value-emerald: #10b981;
+
+  /* Heatmap intensity ramp - a single coherent hue (emerald) getting
+     brighter with activity, same convention as GitHub's contribution graph. */
+  --heatmap-0: rgba(255, 255, 255, 0.06);
+  --heatmap-1: #0f3d2e;
+  --heatmap-2: #15803d;
+  --heatmap-3: #10b981;
+  --heatmap-4: #34d399;
 }
 
 body.light {
   --color-ink: #0b0f1a;
   --color-ink-muted: #5b6472;
-  --color-surface: rgba(11, 15, 26, 0.03);
+  --color-surface: rgba(255, 255, 255, 0.7);
   --color-surface-hover: rgba(11, 15, 26, 0.06);
   --color-border: rgba(11, 15, 26, 0.1);
   --color-border-hover: rgba(11, 15, 26, 0.28);
+
+  --color-value-blue: #1d4ed8;
+  --color-value-violet: #6d28d9;
+  --color-value-emerald: #047857;
+
+  /* Empty cells switch to a dark-tinted low-opacity fill (visible against a
+     light page, whereas a white-tinted fill would vanish) - same bug class
+     as before, fixed at the color-definition level this time. */
+  --heatmap-0: rgba(11, 15, 26, 0.08);
+  --heatmap-1: #d1fae5;
+  --heatmap-2: #6ee7b7;
+  --heatmap-3: #34d399;
+  --heatmap-4: #059669;
 }
 
 body {

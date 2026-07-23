@@ -8,79 +8,113 @@ body,
   height: 100%;
 }
 
-/* Theme tokens as CSS custom properties. This is what makes Tailwind
-   classes like `text-ink`, `bg-surface-hover`, `border-border` actually
-   respond to the dark/light toggle - Tailwind compiles utility classes to
-   fixed values at build time, so without routing them through CSS vars,
-   any class using these tokens would be stuck on one theme's colors
-   regardless of the body.light toggle below. */
+/* =========================
+   THEME VARIABLES
+========================= */
+
 :root {
-  --color-ink: #f5f7fa;
-  --color-ink-muted: #9ca3af;
-  --color-surface: rgba(255, 255, 255, 0.04);
-  --color-surface-hover: rgba(255, 255, 255, 0.06);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.24);
+  /* Text */
+  --color-ink: #f8fafc;
+  --color-ink-muted: #94a3b8;
 
-  /* "Value" tokens: same hue family as the accent colors, but used
-     specifically for readable text/numbers rather than decoration. In dark
-     mode these equal the vivid accent colors (already legible on a dark
-     background). In light mode they're deepened - the vivid accent hexes
-     don't have enough contrast against a light background to read as text. */
-  --color-value-blue: #3b82f6;
-  --color-value-violet: #8b5cf6;
-  --color-value-emerald: #10b981;
+  /* Glass Cards */
+  --color-surface: rgba(30, 41, 59, 0.55);
+  --color-surface-hover: rgba(51, 65, 85, 0.65);
 
-  /* Heatmap intensity ramp - a single coherent hue (emerald) getting
-     brighter with activity, same convention as GitHub's contribution graph. */
-  --heatmap-0: rgba(255, 255, 255, 0.06);
-  --heatmap-1: #0f3d2e;
+  /* Borders */
+  --color-border: rgba(148, 163, 184, 0.12);
+  --color-border-hover: rgba(148, 163, 184, 0.3);
+
+  /* Accent Colors */
+  --color-value-blue: #60a5fa;
+  --color-value-violet: #a78bfa;
+  --color-value-emerald: #34d399;
+
+  /* Heatmap */
+  --heatmap-0: rgba(255, 255, 255, 0.05);
+  --heatmap-1: #14532d;
   --heatmap-2: #15803d;
-  --heatmap-3: #10b981;
-  --heatmap-4: #34d399;
+  --heatmap-3: #22c55e;
+  --heatmap-4: #4ade80;
 }
 
+/* =========================
+   LIGHT MODE
+========================= */
+
 body.light {
-  --color-ink: #0b0f1a;
-  --color-ink-muted: #5b6472;
-  --color-surface: rgba(255, 255, 255, 0.7);
-  --color-surface-hover: rgba(11, 15, 26, 0.06);
-  --color-border: rgba(11, 15, 26, 0.1);
-  --color-border-hover: rgba(11, 15, 26, 0.28);
+  --color-ink: #0f172a;
+  --color-ink-muted: #64748b;
 
-  --color-value-blue: #1d4ed8;
-  --color-value-violet: #6d28d9;
-  --color-value-emerald: #047857;
+  --color-surface: rgba(255, 255, 255, 0.85);
+  --color-surface-hover: rgba(241, 245, 249, 0.95);
 
-  /* Empty cells switch to a dark-tinted low-opacity fill (visible against a
-     light page, whereas a white-tinted fill would vanish) - same bug class
-     as before, fixed at the color-definition level this time. */
-  --heatmap-0: rgba(11, 15, 26, 0.08);
+  --color-border: rgba(148, 163, 184, 0.2);
+  --color-border-hover: rgba(100, 116, 139, 0.35);
+
+  --color-value-blue: #2563eb;
+  --color-value-violet: #7c3aed;
+  --color-value-emerald: #059669;
+
+  --heatmap-0: rgba(226, 232, 240, 0.4);
   --heatmap-1: #d1fae5;
   --heatmap-2: #6ee7b7;
   --heatmap-3: #34d399;
   --heatmap-4: #059669;
 }
 
+/* =========================
+   BODY
+========================= */
+
 body {
   @apply font-body antialiased;
-  background-color: #0b0f1a;
+
+  background:
+    radial-gradient(circle at top left, #312e81 0%, transparent 40%),
+    radial-gradient(circle at top right, #0f766e 0%, transparent 35%),
+    linear-gradient(135deg, #0f172a, #111827, #020617);
+
   color: var(--color-ink);
 }
 
 body.light {
-  background-color: #f5f7fa;
+  background:
+    radial-gradient(circle at top left, #dbeafe 0%, transparent 45%),
+    radial-gradient(circle at top right, #ede9fe 0%, transparent 35%),
+    linear-gradient(135deg, #f8fafc, #eef2ff, #f1f5f9);
 }
 
-/* Reusable glass panel - used for auth cards, dashboard cards, etc. throughout the app */
+/* =========================
+   GLASS PANEL
+========================= */
+
 .glass-panel {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  border-radius: 18px;
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.12),
+    inset 0 1px rgba(255, 255, 255, 0.08);
+
+  transition: all 0.3s ease;
 }
 
-/* Gradient border trick: padding-box + border-box background layering */
+.glass-panel:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-hover);
+  box-shadow:
+    0 15px 40px rgba(37, 99, 235, 0.15);
+}
+
+/* =========================
+   GRADIENT BORDER
+========================= */
+
 .gradient-border {
   position: relative;
 }
@@ -91,28 +125,48 @@ body.light {
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #10b981);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed,
+    #14b8a6,
+    #22c55e
+  );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+
   pointer-events: none;
 }
 
-/* Native <select> dropdown popups are rendered by the browser/OS with a
-   forced white background that page CSS can't override - but our theme's
-   light text color WAS inheriting into the options, making them illegible
-   (near-white text on the browser's white popup). Force readable dark text
-   on options specifically so filters stay usable regardless of theme. */
+/* =========================
+   SELECT
+========================= */
+
 select option {
   color: #111827;
-  background-color: #ffffff;
+  background: #ffffff;
 }
+
+/* =========================
+   FOCUS
+========================= */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid #8b5cf6;
+  outline: 2px solid #7c3aed;
   outline-offset: 2px;
 }
+
+/* =========================
+   REDUCED MOTION
+========================= */
 
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -122,14 +176,28 @@ input:focus-visible {
   }
 }
 
-/* Hide scrollbars everywhere (body and any internal scroll container like
-   the chat window or heatmap) while keeping scroll behavior fully intact -
-   just a visual choice, not a functional one. */
+/* =========================
+   HIDE SCROLLBAR
+========================= */
+
 * {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* old Edge/IE */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 *::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, new Edge */
+  display: none;
+}
+
+/* =========================
+   HIDE CALENDAR / HEATMAP
+========================= */
+
+.calendar,
+.react-calendar,
+.react-calendar-heatmap,
+.heatmap,
+.calendar-grid,
+.contribution-calendar {
+  display: none !important;
 }
